@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 //criação da struct item:
-struct Item {
+struct Item{
 
     char nome[30];
     char tipo[20];
@@ -18,17 +18,22 @@ int totalItens = 0; //zera os itens da mochila
 //Função para adicionar item
 void adicionar(){
 
-    printf("Digite o item que deseja adicionar na mochila: \n");
-    scanf("%s", mochila[totalItens].nome);
+    if(totalItens >= 10){
+        printf("Mochila cheia, não da para adicinar mais.\n");
+    }else{
+        printf("Digite o item que deseja adicionar na mochila: \n");
+        scanf("%s", mochila[totalItens].nome);
 
-    printf("Digite o tipo do item: \n");
-    scanf("%s", mochila[totalItens].tipo);
+        printf("Digite o tipo do item: \n");
+        scanf("%s", mochila[totalItens].tipo);
 
-    printf("Digite a quantidade: \n");
-    scanf("%d", &mochila[totalItens].quantidade);
+        printf("Digite a quantidade: \n");
+        scanf("%d", &mochila[totalItens].quantidade);
 
-    totalItens++;
+        totalItens++;
 
+    }
+ 
 }
 
 //funcçao de listar itens
@@ -69,19 +74,47 @@ void remover(){
     
 }
 
+//função para buscar o item (desafio nivel aventureiro)
+void buscar(){
+
+    char nome[30];
+    int encontrado = 0;
+
+    printf("Digite o item que dseja buscar: \n");
+    scanf("%s", nome);
+
+    for(int i = 0; i < totalItens; i++){   //percorre a lista inteira
+
+        if(strcmp(mochila[i].nome, nome) == 0){ //compara se os nomes são iguais
+
+            printf("Item encontrado!!!\n");
+            printf("Nome : %s\n", mochila[i].nome);
+            printf("Tipo: %s\n", mochila[i].tipo);
+            printf("Quantidade: %d\n", mochila[i].quantidade);
+
+            encontrado = 1;
+            break;
+        }
+    }
+    if(encontrado == 0){
+        printf("item não encontrado.\n");
+    }
+}
+
 int main(){
 
     int opcao;
 
     do{
-
+        printf("Quantidade de itens na mochila: %d\n\n", totalItens);
         printf("###### MENU ######\n");
         printf(" 1 - Adicionar item\n");
         printf(" 2 - Remover item\n");
         printf(" 3 - Listar item\n");
+        printf(" 4 - Buscar item\n");
         printf(" 0 - Sair\n");
 
-        printf("Escolha uma opção: \n");
+        printf("Escolha uma opção: \n\n");
         scanf("%d", &opcao);
 
         switch(opcao){
@@ -96,6 +129,10 @@ int main(){
 
             case 3:
             listar();
+            break;
+
+            case 4:
+            buscar();
             break;
 
             case 0:
